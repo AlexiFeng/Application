@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.example.alexi.demo0851.bangyang.bangyang_ListActivity;
 import com.example.alexi.demo0851.model.MyUser;
-
+import com.example.alexi.demo0851.zhaozanzhu.ZhaoZZ;
 
 
 import cn.bmob.v3.Bmob;
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void onClick_Zanzhu(View view){
-        startActivity(new Intent(this, _zanzhu.class));
+        startActivity(new Intent(this, ZhaoZZ.class));
     }
     public void onClick_SheTuan(View view){
         startActivity(new Intent(this,bangyang_ListActivity.class));

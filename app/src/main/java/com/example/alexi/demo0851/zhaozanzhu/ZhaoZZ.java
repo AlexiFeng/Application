@@ -1,9 +1,14 @@
 package com.example.alexi.demo0851.zhaozanzhu;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -11,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,8 +24,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.alexi.demo0851.R;
+import com.example.alexi.demo0851._zanzhu;
+import com.example.alexi.demo0851.adapter.QuickAdapter;
+import com.example.alexi.demo0851.adapter.ZhaoZanZhuAdapter;
+import com.example.alexi.demo0851.model.ZanzhuSearch;
+import com.example.alexi.demo0851.model.article;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+
+import static java.security.AccessController.getContext;
 
 public class ZhaoZZ extends AppCompatActivity {
 
@@ -32,17 +54,23 @@ public class ZhaoZZ extends AppCompatActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
+    private static int page;
+    private static ArrayList<ZanzhuSearch> zzs;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_zhao_zz);
 
+        zzs=new ArrayList<ZanzhuSearch>();
+
+
+        setContentView(R.layout.activity_zhao_zz);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -52,44 +80,17 @@ public class ZhaoZZ extends AppCompatActivity {
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
+
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
+        onRestart();
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_zhao_zz, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     /**
      * A placeholder fragment containing a simple view.
@@ -100,7 +101,8 @@ public class ZhaoZZ extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-
+        private int a;
+        private RecyclerView recyclerView;
         public PlaceholderFragment() {
         }
 
@@ -119,9 +121,13 @@ public class ZhaoZZ extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+
             View rootView = inflater.inflate(R.layout.fragment_zhao_zz, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            
+            RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            doSearch(rootView,getArguments().getInt(ARG_SECTION_NUMBER));
+
             return rootView;
         }
     }
@@ -140,26 +146,59 @@ public class ZhaoZZ extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            return PlaceholderFragment.newInstance(position);
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 6 total pages.
+            return 6;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "全部";
                 case 1:
-                    return "SECTION 2";
+                    return "文娱";
                 case 2:
-                    return "SECTION 3";
+                    return "学术";
+                case 3:
+                    return "体育";
+                case 4:
+                    return "公益";
+                case 5:
+                    return "其他";
             }
             return null;
         }
     }
+    public static void doSearch(final View rootView, final int kind){
+        BmobQuery<ZanzhuSearch> query = new BmobQuery<ZanzhuSearch>();
+
+        if(kind!=0)
+            query.addWhereEqualTo("ac_kind",kind);
+        query.findObjects(new FindListener<ZanzhuSearch>() {
+            @Override
+            public void done(List<ZanzhuSearch> object, BmobException e) {
+                if(e==null) {
+                    zzs.clear();
+                    for(ZanzhuSearch x : object)
+                            zzs.add(x);
+
+                }else{
+                    Snackbar.make(rootView,""+e.getMessage(),Snackbar.LENGTH_LONG).show();
+                }
+                RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
+                //创建适配器
+                ZhaoZanZhuAdapter adapter = new ZhaoZanZhuAdapter(R.layout.item_rv_zanzhu, zzs);
+                //给RecyclerView设置适配器
+                recyclerView.setAdapter(adapter);
+
+            }
+        });
+    }
+
 }
+

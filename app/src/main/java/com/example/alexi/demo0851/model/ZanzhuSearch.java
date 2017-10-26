@@ -2,6 +2,7 @@ package com.example.alexi.demo0851.model;
 
 
 import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.datatype.BmobDate;
 
 /**
  * Created by alexi on 17-10-26.
@@ -9,14 +10,15 @@ import cn.bmob.v3.BmobObject;
 
 public class ZanzhuSearch extends BmobObject {
     private Club ac_club;
-    private String ac_size;
+    private Integer ac_size;
     private String ac_provide;
     private String ac_need;
     private String ac_name;
-    private String ac_date;
+    private BmobDate ac_date;
     private String ac_loaction;
     private String tel;
     private String qq;
+    private Integer ac_kind;
     public Club getAc_club() {
         return ac_club;
     }
@@ -25,11 +27,11 @@ public class ZanzhuSearch extends BmobObject {
         this.ac_club = ac_club;
     }
 
-    public String getAc_size() {
+    public Integer getAc_size() {
         return ac_size;
     }
 
-    public void setAc_size(String ac_size) {
+    public void setAc_size(Integer ac_size) {
         this.ac_size = ac_size;
     }
 
@@ -57,11 +59,11 @@ public class ZanzhuSearch extends BmobObject {
         this.ac_name = ac_name;
     }
 
-    public String getAc_date() {
+    public BmobDate getAc_date() {
         return ac_date;
     }
 
-    public void setAc_date(String ac_date) {
+    public void setAc_date(BmobDate ac_date) {
         this.ac_date = ac_date;
     }
 
@@ -89,5 +91,11 @@ public class ZanzhuSearch extends BmobObject {
         this.qq = qq;
     }
 
+    public Integer getAc_kind() {
+        return ac_kind;
+    }
 
+    public void setAc_kind(Integer ac_kind) {
+        this.ac_kind = ac_kind;
+    }
 }
