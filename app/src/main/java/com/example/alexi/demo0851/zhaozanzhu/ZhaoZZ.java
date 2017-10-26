@@ -1,5 +1,6 @@
 package com.example.alexi.demo0851.zhaozanzhu;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.example.alexi.demo0851.LoginActivity;
 import com.example.alexi.demo0851.R;
 import com.example.alexi.demo0851._zanzhu;
 import com.example.alexi.demo0851.adapter.QuickAdapter;
@@ -54,22 +56,15 @@ public class ZhaoZZ extends AppCompatActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    private static int page;
-    private static ArrayList<ZanzhuSearch> zzs;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-
-
+    private static Activity tActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        zzs=new ArrayList<ZanzhuSearch>();
-
-
         setContentView(R.layout.activity_zhao_zz);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -86,8 +81,6 @@ public class ZhaoZZ extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-
-        onRestart();
     }
 
 
@@ -101,8 +94,7 @@ public class ZhaoZZ extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-        private int a;
-        private RecyclerView recyclerView;
+
         public PlaceholderFragment() {
         }
 
@@ -122,12 +114,27 @@ public class ZhaoZZ extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
-            View rootView = inflater.inflate(R.layout.fragment_zhao_zz, container, false);
-            
+            final View rootView = inflater.inflate(R.layout.fragment_zhao_zz, container, false);
+
             RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            tActivity=this.getActivity();
             doSearch(rootView,getArguments().getInt(ARG_SECTION_NUMBER));
+            //----------------------
+//            recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
+//            //创建适配器
+//            ZhaoZanZhuAdapter adapter = new ZhaoZanZhuAdapter(R.layout.item_rv_zanzhu, zzs);
+//            adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+//            adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                    Snackbar.make(rootView,""+zzs.get(position).getAc_name(),Snackbar.LENGTH_LONG).show();
+//                }
+//            });
+//            //给RecyclerView设置适配器
+//            recyclerView.setAdapter(adapter);
 
+            //----------------------
             return rootView;
         }
     }
@@ -174,25 +181,31 @@ public class ZhaoZZ extends AppCompatActivity {
             return null;
         }
     }
-    public static void doSearch(final View rootView, final int kind){
-        BmobQuery<ZanzhuSearch> query = new BmobQuery<ZanzhuSearch>();
+    public  static void doSearch(final View rootView, final int kind){
+        BmobQuery<ZanzhuSearch> query = new BmobQuery<>();
 
         if(kind!=0)
             query.addWhereEqualTo("ac_kind",kind);
         query.findObjects(new FindListener<ZanzhuSearch>() {
             @Override
-            public void done(List<ZanzhuSearch> object, BmobException e) {
-                if(e==null) {
-                    zzs.clear();
-                    for(ZanzhuSearch x : object)
-                            zzs.add(x);
-
-                }else{
+            public void done(final List<ZanzhuSearch> object, BmobException e) {
+                if(e!=null) {
                     Snackbar.make(rootView,""+e.getMessage(),Snackbar.LENGTH_LONG).show();
                 }
-                RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
+                final RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
                 //创建适配器
-                ZhaoZanZhuAdapter adapter = new ZhaoZanZhuAdapter(R.layout.item_rv_zanzhu, zzs);
+                ZhaoZanZhuAdapter adapter = new ZhaoZanZhuAdapter(R.layout.item_rv_zanzhu, object);
+                adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+                adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        Intent intent=new Intent(rootView.getContext(),Zz_content.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("momoda", object.get(position));
+                        intent.putExtra("bundle", bundle);
+                        tActivity.startActivity(intent);
+                    }
+                });
                 //给RecyclerView设置适配器
                 recyclerView.setAdapter(adapter);
 
@@ -201,4 +214,5 @@ public class ZhaoZZ extends AppCompatActivity {
     }
 
 }
+
 

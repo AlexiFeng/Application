@@ -1,6 +1,8 @@
 package com.example.alexi.demo0851.model;
 
 
+import java.io.Serializable;
+
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobDate;
 
@@ -8,14 +10,14 @@ import cn.bmob.v3.datatype.BmobDate;
  * Created by alexi on 17-10-26.
  */
 
-public class ZanzhuSearch extends BmobObject {
+public class ZanzhuSearch extends BmobObject implements Serializable {
     private Club ac_club;
     private Integer ac_size;
     private String ac_provide;
     private String ac_need;
     private String ac_name;
     private BmobDate ac_date;
-    private String ac_loaction;
+    private String ac_location;
     private String tel;
     private String qq;
     private Integer ac_kind;
@@ -67,12 +69,12 @@ public class ZanzhuSearch extends BmobObject {
         this.ac_date = ac_date;
     }
 
-    public String getAc_loaction() {
-        return ac_loaction;
+    public String getAc_location() {
+        return ac_location;
     }
 
-    public void setAc_loaction(String ac_loaction) {
-        this.ac_loaction = ac_loaction;
+    public void setAc_location(String ac_location) {
+        this.ac_location = ac_location;
     }
 
     public String getTel() {
