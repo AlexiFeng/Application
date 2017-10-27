@@ -10,24 +10,27 @@
         android:layout_height="80dp" />
 
     <TextView
-        android:id="@+id/tv_title"
+        android:id="@+id/tv_title_zz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/iv_img"
-        android:text="我是标题"
+        android:text="标题"
         android:textColor="#f00"
         android:textSize="15sp" />
 
     <TextView
-        android:id="@+id/tv_content"
+        android:id="@+id/tv_time_zz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_title"
+        android:layout_gravity="center_vertical"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_toRightOf="@id/iv_img"
-        android:text="我是描述" />
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/iv_img"
+        android:layout_below="@+id/tv_title_zz"
+        android:text="时间"
+        android:textSize="15sp" />
+
 </RelativeLayout>

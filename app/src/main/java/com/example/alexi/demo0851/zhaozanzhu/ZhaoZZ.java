@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ import java.util.List;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+
+import static com.example.alexi.demo0851.R.id.time;
 
 public class ZhaoZZ extends AppCompatActivity {
 
@@ -152,15 +155,20 @@ public class ZhaoZZ extends AppCompatActivity {
     }
     public  static void doSearch(final View rootView, final int kind){
         BmobQuery<ZanzhuSearch> query = new BmobQuery<>();
-
+        query.include("ac_club");
         if(kind!=0)
             query.addWhereEqualTo("ac_kind",kind);
+
         query.findObjects(new FindListener<ZanzhuSearch>() {
             @Override
             public void done(final List<ZanzhuSearch> object, BmobException e) {
                 if(e!=null) {
+                    Log.e("注意",e.getMessage());
                     Snackbar.make(rootView,""+e.getMessage(),Snackbar.LENGTH_LONG).show();
                 }
+
+
+
                 final RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
                 //创建适配器
                 ZhaoZanZhuAdapter adapter = new ZhaoZanZhuAdapter(R.layout.item_rv_zanzhu, object);

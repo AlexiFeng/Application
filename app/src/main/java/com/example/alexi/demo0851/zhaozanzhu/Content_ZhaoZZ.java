@@ -32,7 +32,15 @@ public class Content_ZhaoZZ extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("bundle");
         ZanzhuSearch instance = (ZanzhuSearch) bundle.getSerializable("instance");
-        TextView a=(TextView)findViewById(R.id.content_text);
-        a.setText(instance.getAc_location());
+        TextView con=(TextView)findViewById(R.id.name_zz);
+        con.setText(instance.getAc_name());
+
+        con=(TextView)findViewById(R.id.time_zz);
+        con.setText(instance.getAc_date().getDate().toString());
+        con=(TextView)findViewById(R.id.need_zz);
+        con.setText(instance.getAc_need());
+        con=(TextView)findViewById(R.id.provide_zz);
+        con.setText(instance.getAc_provide());
+
     }
 }

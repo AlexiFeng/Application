@@ -26,9 +26,8 @@ public class ZhaoZanZhuAdapter extends BaseQuickAdapter<ZanzhuSearch, BaseViewHo
     @Override
     protected void convert(BaseViewHolder helper, ZanzhuSearch item) {
         //可链式调用赋值
-        helper.setText(R.id.tv_title, item.getAc_name())
-                .setText(R.id.tv_content, "时间:"+item.getAc_date().getDate().toString())
-                .setText(R.id.tv_content, "时间:"+item.getAc_date().getDate().toString())
+        helper.setText(R.id.tv_title_zz, item.getAc_name())
+                .setText(R.id.tv_time_zz, "时间:"+item.getAc_date().getDate().toString())
                 .setImageResource(R.id.iv_img, R.mipmap.ic_launcher);
         
     }
