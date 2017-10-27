@@ -11,7 +11,7 @@ public class Club extends BmobObject {
     private String qq;
     private Integer club_size;
     private String club_name;
-    private String club_manager;
+    private MyUser club_manager;
 
     public String getTel() {
         return tel;
@@ -45,11 +45,11 @@ public class Club extends BmobObject {
         this.club_name = club_name;
     }
 
-    public String getClub_manager() {
+    public MyUser getClub_manager() {
         return club_manager;
     }
 
-    public void setClub_manager(String club_manager) {
+    public void setClub_manager(MyUser club_manager) {
         this.club_manager = club_manager;
     }
 

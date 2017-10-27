@@ -1,13 +1,10 @@
 package com.example.alexi.demo0851.zhaozanzhu;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,33 +14,20 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.example.alexi.demo0851.LoginActivity;
 import com.example.alexi.demo0851.R;
-import com.example.alexi.demo0851._zanzhu;
-import com.example.alexi.demo0851.adapter.QuickAdapter;
 import com.example.alexi.demo0851.adapter.ZhaoZanZhuAdapter;
 import com.example.alexi.demo0851.model.ZanzhuSearch;
-import com.example.alexi.demo0851.model.article;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
-
-import static java.security.AccessController.getContext;
 
 public class ZhaoZZ extends AppCompatActivity {
 
@@ -120,21 +104,6 @@ public class ZhaoZZ extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             tActivity=this.getActivity();
             doSearch(rootView,getArguments().getInt(ARG_SECTION_NUMBER));
-            //----------------------
-//            recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
-//            //创建适配器
-//            ZhaoZanZhuAdapter adapter = new ZhaoZanZhuAdapter(R.layout.item_rv_zanzhu, zzs);
-//            adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
-//            adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-//                @Override
-//                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                    Snackbar.make(rootView,""+zzs.get(position).getAc_name(),Snackbar.LENGTH_LONG).show();
-//                }
-//            });
-//            //给RecyclerView设置适配器
-//            recyclerView.setAdapter(adapter);
-
-            //----------------------
             return rootView;
         }
     }
@@ -199,9 +168,9 @@ public class ZhaoZZ extends AppCompatActivity {
                 adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                        Intent intent=new Intent(rootView.getContext(),Zz_content.class);
+                        Intent intent=new Intent(rootView.getContext(),Content_ZhaoZZ.class);
                         Bundle bundle = new Bundle();
-                        bundle.putSerializable("momoda", object.get(position));
+                        bundle.putSerializable("instance", object.get(position));
                         intent.putExtra("bundle", bundle);
                         tActivity.startActivity(intent);
                     }

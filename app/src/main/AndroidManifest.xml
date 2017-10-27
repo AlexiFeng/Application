@@ -35,7 +35,6 @@
         <activity
             android:name=".RegisterActivity"
             android:label="@string/title_activity_register" />
-        <activity android:name="._zanzhu" />
         <activity
             android:name=".bangyang.bangyang_ListActivity"
             android:label="@string/title_stitem_list"
@@ -59,8 +58,8 @@
                 android:value="com.example.alexi.demo0851.MainActivity" />
         </activity>
         <activity
-            android:name=".zhaozanzhu.Zz_content"
-            android:label="@string/title_activity_zz_content"
+            android:name=".zhaozanzhu.Content_ZhaoZZ"
+            android:label="@string/title_activity_content__zhao_zz"
             android:parentActivityName=".zhaozanzhu.ZhaoZZ"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
