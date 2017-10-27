@@ -16,17 +16,22 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.example.alexi.demo0851.LoginActivity;
 import com.example.alexi.demo0851.R;
 import com.example.alexi.demo0851.adapter.ZhaoZanZhuAdapter;
+import com.example.alexi.demo0851.model.MyUser;
 import com.example.alexi.demo0851.model.ZanzhuSearch;
 
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
@@ -70,6 +75,30 @@ public class ZhaoZZ extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_zhao_zz, menu);
+        MyUser currentUser = BmobUser.getCurrentUser(MyUser.class);
+        if(currentUser != null&&currentUser.getStatus()==1)
+            menu.getItem(0).setVisible(true);
+        else
+            menu.getItem(0).setVisible(true);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.add_zhaozz ){
+            startActivity(new Intent(this,LoginActivity.class));
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
 
     /**
