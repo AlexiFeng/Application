@@ -37,20 +37,27 @@ public class MainActivity extends AppCompatActivity
         nowUser = MyUser.getCurrentUser(MyUser.class);
         navigationView.getMenu().clear();
         TextView myName = (TextView) headerLayout.findViewById(R.id.nav_header_name);
-        if(nowUser != null&&nowUser.getStatus()==1){
-
-            if (nowUser.getNick()==null){
-                myName.setText(nowUser.getEmail());
+        TextView myEmail = (TextView) headerLayout.findViewById(R.id.nav_header_email);
+        if(nowUser != null){
+            if (nowUser.getNick() != null) {
+                myEmail.setText(nowUser.getEmail());
+                myName.setText(nowUser.getNick());
+            } else {
+                myName.setText("");
             }
-
-            navigationView.getMenu().add(1,0,1,"学生");
-            navigationView.getMenu().add(1,1,1,"登出");
-            navigationView.getMenu().setGroupVisible(0,false);
+            String[] inner;
+            switch(nowUser.getStatus()){
+                case 0:inner = new String[]{"管理员", "修改个人信息","申请审批","登出"};nV_Generator(0, inner);break;
+                case 1:inner = new String[]{"学生", "修改个人信息", "我的社团","登出"};nV_Generator(1, inner);break;
+                case 2:inner = new String[]{"社团负责人", "修改个人信息","社团管理","交易记录","登出"};nV_Generator(2, inner);break;
+                case 3:inner = new String[]{"社会人士", "修改个人信息", "我的赞助","登出"};nV_Generator(3, inner);break;
+            }
         }
         else{
             myName.setText("请先登录");
+            myEmail.setText("username@email.com");
             navigationView.getMenu().add(1,0,1,"登录");
-            navigationView.getMenu().add(1,2,1,"关于");
+            navigationView.getMenu().add(1,1,1,"关于");
             navigationView.getMenu().setGroupVisible(0,false);
         }
         navigationView.setNavigationItemSelectedListener(this);
@@ -123,7 +130,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        int group=item.getGroupId();
         if (id == R.id.nav_login) {
             turnLogin();
         } else if (id == R.id.nav_register) {
@@ -149,8 +156,8 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
     public void turnLogin() {
-        BmobUser bmobUser = BmobUser.getCurrentUser();
-        if(bmobUser != null){
+        MyUser currentUser = BmobUser.getCurrentUser(MyUser.class);
+        if(currentUser != null){
             Snackbar.make(getWindow().getDecorView(), "登陆成功", Snackbar.LENGTH_SHORT).show();
         }else{
             startActivity(new Intent(this,LoginActivity.class));
@@ -171,6 +178,11 @@ public class MainActivity extends AppCompatActivity
         Snackbar.make(getWindow().getDecorView(), "登出成功", Snackbar.LENGTH_SHORT).show();
         MainActivity.this.onRestart();
 
+    }
+    public void nV_Generator(Integer group,String[] inner){
+        for(int i=0;i<inner.length;i++)
+        navigationView.getMenu().add(group,i,1,inner[i]);
+        navigationView.getMenu().setGroupVisible(0,false);
     }
 }
 

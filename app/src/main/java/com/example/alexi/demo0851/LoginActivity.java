@@ -3,6 +3,10 @@ package com.example.alexi.demo0851;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -31,6 +35,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.alexi.demo0851.model.MyUser;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +44,7 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.LogInListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -69,12 +76,62 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
 
+    public void Register(View view){
+        startActivity(new Intent(this,RegisterActivity.class));
+    }
+    public void GetBack(View view){
+        final View v=view;
+        final EditText editText = new EditText(view.getContext());
+        AlertDialog.Builder inputDialog =
+                new AlertDialog.Builder(view.getContext());
+        inputDialog.setTitle("请输入邮箱").setView(editText);
+        inputDialog.setPositiveButton("确定",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(LoginActivity.this,
+                                editText.getText().toString(),
+                                Toast.LENGTH_SHORT).show();
+                        SendMail(v,editText.getText().toString());
+                    }
+                });
+        inputDialog.setNegativeButton("取消",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+        inputDialog.show();
+
+
+
+    }
+
+    public void SendMail(View view,String t){
+        final String email = t;
+        MyUser.resetPasswordByEmail(t, new UpdateListener() {
+
+            @Override
+            public void done(BmobException e) {
+                if(e==null){
+                    Toast.makeText(LoginActivity.this,
+                            "重置密码请求成功，请到" + email + "邮箱进行密码重置操作",
+                            Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(LoginActivity.this,
+                            "失败:" + e.getMessage(),
+                            Toast.LENGTH_SHORT).show();
+
+
+                }
+            }
+        });
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
-
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
@@ -369,6 +426,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
     }
+
 
 }
 

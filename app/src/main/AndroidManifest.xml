@@ -66,6 +66,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.alexi.demo0851.zhaozanzhu.ZhaoZZ" />
         </activity>
+        <activity
+            android:name=".zhaozanzhu.NewZanzhu"
+            android:label="@string/title_activity_new_zanzhu"
+            android:parentActivityName=".zhaozanzhu.ZhaoZZ"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.alexi.demo0851.zhaozanzhu.ZhaoZZ" />
+        </activity>
     </application>
 
 </manifest>

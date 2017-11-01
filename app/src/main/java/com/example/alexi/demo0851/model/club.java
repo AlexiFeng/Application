@@ -6,7 +6,7 @@ import cn.bmob.v3.BmobObject;
  * Created by alexi on 17-10-26.
  */
 
-public class Club extends BmobObject {
+public class club extends BmobObject {
     private String tel;
     private String qq;
     private Integer club_size;

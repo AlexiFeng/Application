@@ -3,12 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin_by"
     android:paddingLeft="@dimen/activity_horizontal_margin_by"
     android:paddingRight="@dimen/activity_horizontal_margin_by"
     android:paddingTop="@dimen/activity_vertical_margin_by"
-    tools:context="com.example.alexi.demo0851.LoginActivity">
+    tools:context="com.example.alexi.demo0851.LoginActivity"
+    android:orientation="vertical">
 
     <!-- Login progress -->
     <ProgressBar
@@ -22,7 +22,8 @@
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="visible">
 
         <LinearLayout
             android:id="@+id/email_login_form"
@@ -55,23 +56,38 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
                     android:imeActionId="@+id/login"
-                    android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true" />
 
+                <Button
+                    android:id="@+id/email_sign_in_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="login"
+                    android:text="@string/action_sign_in"
+                    android:textStyle="bold" />
+
             </android.support.design.widget.TextInputLayout>
 
-            <Button
-                android:id="@+id/email_sign_in_button"
-                style="?android:textAppearanceSmall"
+            <TextView
+                android:id="@+id/forgetPwd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in"
-                android:textStyle="bold"
-                android:onClick="login"/>
+                android:layout_marginTop="20dp"
+                android:onClick="GetBack"
+                android:text="忘记密码" />
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/noRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="Register"
+                android:text="还没有账号?" />
 
         </LinearLayout>
     </ScrollView>

@@ -11,7 +11,7 @@ import cn.bmob.v3.datatype.BmobDate;
  */
 
 public class ZanzhuSearch extends BmobObject implements Serializable {
-    private Club ac_club;
+    private club ac_club;
     private Integer ac_size;
     private String ac_provide;
     private String ac_need;
@@ -21,11 +21,40 @@ public class ZanzhuSearch extends BmobObject implements Serializable {
     private String tel;
     private String qq;
     private Integer ac_kind;
-    public Club getAc_club() {
+    private Integer verifying;
+    private String reason;
+    private String other;
+    public String getOther() {
+        return other;
+    }
+
+    public void setOther(String other) {
+        this.other = other;
+    }
+
+
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+    public Integer getVerifying() {
+        return verifying;
+    }
+
+    public void setVerifying(Integer verifying) {
+        this.verifying = verifying;
+    }
+
+
+    public club getAc_club() {
         return ac_club;
     }
 
-    public void setAc_club(Club ac_club) {
+    public void setAc_club(club ac_club) {
         this.ac_club = ac_club;
     }
 

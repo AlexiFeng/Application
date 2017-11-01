@@ -78,12 +78,13 @@ public class ZhaoZZ extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        //生成右侧发布赞助按钮
         getMenuInflater().inflate(R.menu.menu_zhao_zz, menu);
         MyUser currentUser = BmobUser.getCurrentUser(MyUser.class);
         if(currentUser != null&&currentUser.getStatus()==1)
             menu.getItem(0).setVisible(true);
         else
-            menu.getItem(0).setVisible(true);
+            menu.getItem(0).setVisible(false);
 
         return true;
     }
@@ -98,6 +99,10 @@ public class ZhaoZZ extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void newZanzhu(MenuItem item) {
+        startActivity(new Intent(this,NewZanzhu.class));
     }
 
 
@@ -185,6 +190,7 @@ public class ZhaoZZ extends AppCompatActivity {
     public  static void doSearch(final View rootView, final int kind){
         BmobQuery<ZanzhuSearch> query = new BmobQuery<>();
         query.include("ac_club");
+        query.addWhereEqualTo("verifying",1);
         if(kind!=0)
             query.addWhereEqualTo("ac_kind",kind);
 
@@ -195,7 +201,6 @@ public class ZhaoZZ extends AppCompatActivity {
                     Log.e("注意",e.getMessage());
                     Snackbar.make(rootView,""+e.getMessage(),Snackbar.LENGTH_LONG).show();
                 }
-
 
 
                 final RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
@@ -218,7 +223,6 @@ public class ZhaoZZ extends AppCompatActivity {
             }
         });
     }
-
 }
 
 
