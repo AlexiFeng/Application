@@ -75,6 +75,24 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.alexi.demo0851.zhaozanzhu.ZhaoZZ" />
         </activity>
+        <activity
+            android:name=".Information_Xiugai"
+            android:label="@string/title_activity_information__xiugai"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.alexi.demo0851.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ShenQingShenpi"
+            android:label="@string/title_activity_shen_qing_shenpi"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.alexi.demo0851.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

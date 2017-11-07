@@ -1,6 +1,7 @@
 package com.example.alexi.demo0851;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +23,9 @@ import android.widget.Toast;
 import com.example.alexi.demo0851.bangyang.bangyang_ListActivity;
 import com.example.alexi.demo0851.model.MyUser;
 import com.example.alexi.demo0851.zhaozanzhu.ZhaoZZ;
+import com.jude.rollviewpager.RollPagerView;
+import com.jude.rollviewpager.adapter.StaticPagerAdapter;
+import com.jude.rollviewpager.hintview.ColorPointHintView;
 
 
 import cn.bmob.v3.Bmob;
@@ -30,6 +36,7 @@ public class MainActivity extends AppCompatActivity
         private View headerLayout;
         private NavigationView navigationView;
         private MyUser nowUser;
+        private RollPagerView mRollViewPager;
     public void onRestart(){
         super.onRestart();
 
@@ -47,10 +54,10 @@ public class MainActivity extends AppCompatActivity
             }
             String[] inner;
             switch(nowUser.getStatus()){
-                case 0:inner = new String[]{"管理员", "修改个人信息","申请审批","登出"};nV_Generator(0, inner);break;
-                case 1:inner = new String[]{"学生", "修改个人信息", "我的社团","登出"};nV_Generator(1, inner);break;
-                case 2:inner = new String[]{"社团负责人", "修改个人信息","社团管理","交易记录","登出"};nV_Generator(2, inner);break;
-                case 3:inner = new String[]{"社会人士", "修改个人信息", "我的赞助","登出"};nV_Generator(3, inner);break;
+                case 0:inner = new String[]{ "修改个人信息","审批申请","登出"};nV_Generator(0, inner);myName.append("[管理员]");break;
+                case 1:inner = new String[]{"修改个人信息","社团管理","我的活动","我的筹一筹","交易记录","登出"};nV_Generator(1, inner);myName.append("[社团管理者]");break;
+                case 2:inner = new String[]{ "修改个人信息", "我的社团","我的筹一筹","登出"};nV_Generator(2, inner);myName.append("[学生]");break;
+                case 3:inner = new String[]{"修改个人信息", "我发布的赞助","我提供的赞助","交易记录","登出"};nV_Generator(3, inner);myName.append("[企业人士]");break;
             }
         }
         else{
@@ -88,6 +95,42 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        TextView notice=(TextView)findViewById(R.id.notice);
+        notice.setBackgroundColor(Color.parseColor("#DAA520"));
+        notice.setText("目前入驻商家8户,入驻社团30个");
+        TextView index_content=(TextView)findViewById(R.id.index_content);
+        index_content.setText("Alexi发布了新的筹一筹信息");
+        index_content.append("\n欢迎Love-Coding社团加入平台！");
+        index_content.append("\n欢迎开智学堂加入认证商家！");
+        index_content.append("\n欢迎新用户Alexi！");
+        TextView index_time=(TextView)findViewById(R.id.index_time);
+        index_time.setTextColor(Color.BLUE);
+        index_time.setText("[32分钟前]");
+        index_time.append("\n[54分钟前]");
+        index_time.append("\n[6小时前]");
+        index_time.append("\n[3天前]");
+        //---轮播图
+
+        mRollViewPager = (RollPagerView) findViewById(R.id.roll_view_pager);
+
+        //设置播放时间间隔
+        mRollViewPager.setPlayDelay(1000);
+        //设置透明度
+        mRollViewPager.setAnimationDurtion(500);
+        //设置适配器
+        mRollViewPager.setAdapter(new TestNormalAdapter());
+
+        //设置指示器（顺序依次）
+        //自定义指示器图片
+        //设置圆点指示器颜色
+        //设置文字指示器
+        //隐藏指示器
+        //mRollViewPager.setHintView(new IconHintView(this, R.drawable.point_focus, R.drawable.point_normal));
+        mRollViewPager.setHintView(new ColorPointHintView(this, Color.YELLOW,Color.WHITE));
+        //mRollViewPager.setHintView(new TextHintView(this));
+        //mRollViewPager.setHintView(null);
+        //---
+
         onRestart();
 
     }
@@ -117,11 +160,6 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -131,40 +169,63 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         int group=item.getGroupId();
-        if (id == R.id.nav_login) {
-            turnLogin();
-        } else if (id == R.id.nav_register) {
-            turnRegister();
-        } else if (id == R.id.nav_slideshow) {
-            logout();
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        } else if(id==0){
+        MyUser currentUser = BmobUser.getCurrentUser(MyUser.class);
+        if(currentUser==null){
+            if (id==0)
             turnLogin();
         }
-        else if(id==1){
-            logout();
+        else{
+            if(group==0){
+               //TODO:管理员状态侧栏函数
+                switch(id){
+                    case 0: startActivity(new Intent(this,Information_Xiugai.class));break;
+                    case 1: startActivity(new Intent(this,ShenQingShenpi.class));break;
+                }
+
+            }
+            else if(group==1){
+               //TODO:社团管理者状态侧栏函数
+                switch(id){
+                    case 0: startActivity(new Intent(this,Information_Xiugai.class));break;
+                    case 1: startActivity(new Intent(this,ShenQingShenpi.class));break;
+                    case 2: break;
+                    case 3: break;
+                    case 4: break;
+                    case 5: logout();break;
+                }
+            }
+            else if(group==2){
+               //TODO:学生状态侧栏函数
+                switch(id){
+                    case 0: startActivity(new Intent(this,Information_Xiugai.class));break;
+                    case 1: break;
+                    case 2: break;
+                    case 3: break;
+                    case 4: break;
+                    case 5: logout();break;
+                }
+            }
+            else if(group==3){
+                //TODO:社会人士状态侧栏函数
+                switch(id){
+                    case 0: startActivity(new Intent(this,Information_Xiugai.class));break;
+                    case 1: break;
+                    case 2: break;
+                    case 3: break;
+                    case 4: break;
+                    case 5: logout();break;
+                }
+            }
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     public void turnLogin() {
-        MyUser currentUser = BmobUser.getCurrentUser(MyUser.class);
-        if(currentUser != null){
-            Snackbar.make(getWindow().getDecorView(), "登陆成功", Snackbar.LENGTH_SHORT).show();
-        }else{
             startActivity(new Intent(this,LoginActivity.class));
-        }
-    }
-    public void turnRegister() {
-        startActivity(new Intent(this,RegisterActivity.class));
     }
 
     public void onClick_Zanzhu(View view){
@@ -184,6 +245,32 @@ public class MainActivity extends AppCompatActivity
         navigationView.getMenu().add(group,i,1,inner[i]);
         navigationView.getMenu().setGroupVisible(0,false);
     }
+
+    ///------------------------轮播图
+    private class TestNormalAdapter extends StaticPagerAdapter {
+        private int[] imgs = {
+                R.drawable.first,
+                R.drawable.second
+
+        };
+
+
+        @Override
+        public View getView(ViewGroup container, int position) {
+            ImageView view = new ImageView(container.getContext());
+            view.setImageResource(imgs[position]);
+            view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            return view;
+        }
+
+
+        @Override
+        public int getCount() {
+            return imgs.length;
+        }
+    }
+    ///------------------------
 }
 
 

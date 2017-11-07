@@ -4,4 +4,6 @@
     <string name="title_activity_zz_content">Zz_content</string>
     <string name="title_activity_content__zhao_zz">详情</string>
     <string name="title_activity_new_zanzhu">发布需求</string>
+    <string name="title_activity_information__xiugai">修改个人信息</string>
+    <string name="title_activity_shen_qing_shenpi">审批申请</string>
 </resources>

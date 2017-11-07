@@ -14,8 +14,8 @@ public class MyUser extends BmobUser {
     private club club_belong;
     /*
     * 0:Admin
-    * 1:Student
-    * 2.Manager
+    * 1:Manager
+    * 2.Student
     * 3.Society
     * */
     public Integer getStatus() {

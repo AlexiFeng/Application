@@ -11,17 +11,12 @@ import java.util.ArrayList;
  */
 
 public class QuickAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
-
-
-    public QuickAdapter(int item_recycler, ArrayList<String> strings) {
-        super(item_recycler, strings);
+    public QuickAdapter(ArrayList<String> test) {
+        super(R.layout.item_rv_zanzhu, test);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, String item) {
-        helper.setText(R.id.tv_item, item);
-        helper.setText(R.id.tv_test,"nihao");
+    protected void convert(BaseViewHolder viewHolder, String item) {
+        viewHolder.setText(R.id.tv_title_zz,"nihao");
     }
-
 }
-

@@ -4,7 +4,7 @@
     tools:context="com.example.alexi.demo0851.zhaozanzhu.ZhaoZZ">
     <item
         android:id="@+id/add_zhaozz"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/add"
         android:onClick="newZanzhu"
         app:showAsAction="ifRoom"
         />
