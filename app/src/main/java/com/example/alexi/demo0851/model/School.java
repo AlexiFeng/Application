@@ -11,7 +11,6 @@ public class School extends BmobObject {
     private String name;
     private String place;
     private String information;
-    private Course course;
     private String tel;
     private BmobFile banner;
     public BmobFile getBanner() {
@@ -54,14 +53,6 @@ public class School extends BmobObject {
 
     public void setInformation(String information) {
         this.information = information;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course Course) {
-        this.course = Course;
     }
 
 

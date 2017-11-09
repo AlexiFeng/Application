@@ -41,9 +41,9 @@ public class Content_ZhaoZZ extends AppCompatActivity {
             final FengCaiSearch instance = (FengCaiSearch ) bundle.getSerializable("instance");
             fengCai(instance);
         }
-        else if (kind.equals("School")){
+        else if (kind.equals("course")){
             final School instance = (School) bundle.getSerializable("instance");
-
+            school(instance);
         }
     }
 
