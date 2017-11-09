@@ -17,10 +17,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-
-import com.example.alexi.demo0851.bangyang.bangyang_ListActivity;
 import com.example.alexi.demo0851.model.MyUser;
 import com.example.alexi.demo0851.zhaozanzhu.ZhaoZZ;
 import com.jude.rollviewpager.RollPagerView;
@@ -37,6 +34,8 @@ public class MainActivity extends AppCompatActivity
         private NavigationView navigationView;
         private MyUser nowUser;
         private RollPagerView mRollViewPager;
+        private Intent intent;
+        private Bundle bundle;
     public void onRestart(){
         super.onRestart();
 
@@ -229,10 +228,25 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void onClick_Zanzhu(View view){
-        startActivity(new Intent(this, ZhaoZZ.class));
+        intent=new Intent(view.getContext(),ZhaoZZ.class);
+        bundle = new Bundle();
+        bundle.putSerializable("instance","zanzhu");
+        intent.putExtra("bundle", bundle);
+        startActivity(intent);
     }
     public void onClick_SheTuan(View view){
-        startActivity(new Intent(this,bangyang_ListActivity.class));
+        intent=new Intent(view.getContext(),ZhaoZZ.class);
+        bundle = new Bundle();
+        bundle.putSerializable("instance","shetuan");
+        intent.putExtra("bundle", bundle);
+        startActivity(intent);
+    }
+    public void onClick_FengCai(View view){
+        intent=new Intent(view.getContext(),ZhaoZZ.class);
+        bundle = new Bundle();
+        bundle.putSerializable("instance","fengcai");
+        intent.putExtra("bundle", bundle);
+        startActivity(intent);
     }
     public void logout(){
         MyUser.logOut();
@@ -271,6 +285,20 @@ public class MainActivity extends AppCompatActivity
         }
     }
     ///------------------------
+    public void onClick_Yihubaiying(View view){
+        intent=new Intent(view.getContext(),ZhaoZZ.class);
+        bundle = new Bundle();
+        bundle.putSerializable("instance","yihubaiying");
+        intent.putExtra("bundle", bundle);
+        startActivity(intent);
+    }
+    public void onClick_Course(View view){
+        intent=new Intent(view.getContext(),ZhaoZZ.class);
+        bundle = new Bundle();
+        bundle.putSerializable("instance","course");
+        intent.putExtra("bundle", bundle);
+        startActivity(intent);
+    }
 }
 
 

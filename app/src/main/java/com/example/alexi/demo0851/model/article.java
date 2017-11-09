@@ -1,5 +1,7 @@
 package com.example.alexi.demo0851.model;
 
+import cn.bmob.v3.datatype.BmobDate;
+
 /**
  * Created by alexi on 17-10-24.
  */
@@ -7,6 +9,16 @@ package com.example.alexi.demo0851.model;
 public class article {
     private String title;
     private String article;
+
+    public BmobDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(BmobDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    private BmobDate createdAt;
     public String getTitle() {
         return title;
     }

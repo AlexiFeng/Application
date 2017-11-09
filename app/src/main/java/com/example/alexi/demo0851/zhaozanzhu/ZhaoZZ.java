@@ -1,6 +1,7 @@
 package com.example.alexi.demo0851.zhaozanzhu;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.Snackbar;
@@ -24,9 +25,15 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.alexi.demo0851.LoginActivity;
 import com.example.alexi.demo0851.R;
+import com.example.alexi.demo0851.adapter.ClubAdapter;
+import com.example.alexi.demo0851.adapter.FengCaiAdapter;
+import com.example.alexi.demo0851.adapter.YiHuBaiYingAdapter;
 import com.example.alexi.demo0851.adapter.ZhaoZanZhuAdapter;
+import com.example.alexi.demo0851.model.FengCaiSearch;
 import com.example.alexi.demo0851.model.MyUser;
+import com.example.alexi.demo0851.model.Post;
 import com.example.alexi.demo0851.model.ZanzhuSearch;
+import com.example.alexi.demo0851.model.club;
 
 import java.util.List;
 
@@ -53,12 +60,36 @@ public class ZhaoZZ extends AppCompatActivity {
      */
     private ViewPager mViewPager;
     private static Activity tActivity;
+    private static String instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_zhao_zz);
+        //---传值
+        Intent intent = getIntent();
+        Bundle bundle = intent.getBundleExtra("bundle");
+        instance = (String) bundle.getSerializable("instance");
+
+        //---传值结束
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (instance.equals("shetuan")){
+            toolbar.setTitle("社团信息");
+        }
+        else if(instance.equals("zanzhu")){
+            toolbar.setTitle("找赞助");
+        }
+        else if(instance.equals("fengcai")){
+            toolbar.setTitle("风采活动");
+        }
+        else if(instance.equals("yihubaiying")){
+            toolbar.setTitle("一呼百应");
+
+        }
+        else if(instance.equals("course")){
+            toolbar.setTitle("课程信息");
+        }
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Create the adapter that will return a fragment for each of the three
@@ -69,10 +100,10 @@ public class ZhaoZZ extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
 
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
+        if(instance.equals("yihubaiying"))
+            tabLayout.setVisibility(View.GONE);
     }
 
 
@@ -81,7 +112,7 @@ public class ZhaoZZ extends AppCompatActivity {
         //生成右侧发布赞助按钮
         getMenuInflater().inflate(R.menu.menu_zhao_zz, menu);
         MyUser currentUser = BmobUser.getCurrentUser(MyUser.class);
-        if(currentUser != null&&currentUser.getStatus()==1)
+        if(currentUser != null&&currentUser.getStatus()==1&&instance.equals("zanzhu"))
             menu.getItem(0).setVisible(true);
         else
             menu.getItem(0).setVisible(false);
@@ -92,7 +123,6 @@ public class ZhaoZZ extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.add_zhaozz ){
             startActivity(new Intent(this,LoginActivity.class));
             return true;
@@ -140,7 +170,18 @@ public class ZhaoZZ extends AppCompatActivity {
             RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             tActivity=this.getActivity();
-            doSearch(rootView,getArguments().getInt(ARG_SECTION_NUMBER));
+            if (instance.equals("shetuan")){
+                doSearch_ST(rootView,getArguments().getInt(ARG_SECTION_NUMBER));
+            }
+            else if(instance.equals("zanzhu")){
+                doSearch_ZZ(rootView,getArguments().getInt(ARG_SECTION_NUMBER));
+            }
+            else if(instance.equals("fengcai")){
+                doSearch_FC(rootView,getArguments().getInt(ARG_SECTION_NUMBER));
+            }
+            else if(instance.equals("yihubaiying")){
+                doSearch_YHBY(rootView);
+            }
             return rootView;
         }
     }
@@ -187,7 +228,7 @@ public class ZhaoZZ extends AppCompatActivity {
             return null;
         }
     }
-    public  static void doSearch(final View rootView, final int kind){
+    public  static void doSearch_ZZ(final View rootView, final int kind){
         BmobQuery<ZanzhuSearch> query = new BmobQuery<>();
         query.include("ac_club");
         query.addWhereEqualTo("verifying",1);
@@ -201,8 +242,6 @@ public class ZhaoZZ extends AppCompatActivity {
                     Log.e("注意",e.getMessage());
                     Snackbar.make(rootView,""+e.getMessage(),Snackbar.LENGTH_LONG).show();
                 }
-
-
                 final RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
                 //创建适配器
                 ZhaoZanZhuAdapter adapter = new ZhaoZanZhuAdapter(R.layout.item_rv_zanzhu, object);
@@ -213,6 +252,110 @@ public class ZhaoZZ extends AppCompatActivity {
                         Intent intent=new Intent(rootView.getContext(),Content_ZhaoZZ.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("instance", object.get(position));
+                        bundle.putSerializable("kind", "zanzhu");
+                        intent.putExtra("bundle", bundle);
+                        tActivity.startActivity(intent);
+                    }
+                });
+
+                //给RecyclerView设置适配器
+                recyclerView.setAdapter(adapter);
+
+            }
+        });
+    }
+
+    public  static void doSearch_FC(final View rootView, final int kind){
+        BmobQuery<FengCaiSearch> query = new BmobQuery<>();
+        query.include("fc_club");
+        if(kind!=0)
+            query.addWhereEqualTo("fc_kind",kind);
+        query.findObjects(new FindListener<FengCaiSearch>() {
+            @Override
+            public void done(final List<FengCaiSearch> object, BmobException e) {
+                if(e!=null) {
+                    Log.e("注意",e.getMessage());
+                    Snackbar.make(rootView,""+e.getMessage(),Snackbar.LENGTH_LONG).show();
+                }
+
+                final RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
+                //创建适配器
+                FengCaiAdapter adapter = new FengCaiAdapter(R.layout.item_rv_zanzhu, object);
+                adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+                adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        Intent intent=new Intent(rootView.getContext(),Content_ZhaoZZ.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("instance", object.get(position));
+                        bundle.putSerializable("kind", "fengcai");
+                        intent.putExtra("bundle", bundle);
+                        tActivity.startActivity(intent);
+                    }
+                });
+                //给RecyclerView设置适配器
+                recyclerView.setAdapter(adapter);
+
+            }
+        });
+    }
+    public  static void doSearch_ST(final View rootView, final int kind){
+        BmobQuery<club> query = new BmobQuery<>();
+        if(kind!=0)
+            query.addWhereEqualTo("club_kind",kind);
+        query.include("club_manager");
+        query.findObjects(new FindListener<club>() {
+            @Override
+            public void done(final List<club> object, BmobException e) {
+                if(e!=null) {
+                    Log.e("注意",e.getMessage());
+                    Snackbar.make(rootView,""+e.getMessage(),Snackbar.LENGTH_LONG).show();
+                }
+
+
+                final RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
+                //创建适配器
+                ClubAdapter adapter = new ClubAdapter(R.layout.item_rv_zanzhu, object);
+                adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+                adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        Intent intent=new Intent(rootView.getContext(),Content_ZhaoZZ.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("instance", object.get(position));
+                        bundle.putSerializable("kind", "shetuan");
+                        intent.putExtra("bundle", bundle);
+                        tActivity.startActivity(intent);
+                    }
+                });
+                //给RecyclerView设置适配器
+                recyclerView.setAdapter(adapter);
+
+            }
+        });
+    }
+    public  static void doSearch_YHBY(final View rootView){
+
+        BmobQuery<Post> query = new BmobQuery<>();
+
+        query.findObjects(new FindListener<Post>() {
+            @Override
+            public void done(final List<Post> object, BmobException e) {
+                if(e!=null) {
+                    Log.e("注意",e.getMessage());
+                    Snackbar.make(rootView,""+e.getMessage(),Snackbar.LENGTH_LONG).show();
+                }
+                final RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
+                //创建适配器
+                YiHuBaiYingAdapter adapter = new YiHuBaiYingAdapter(R.layout.item_rv_zanzhu, object);
+                adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
+                adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        Intent intent=new Intent(rootView.getContext(),Content_ZhaoZZ.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("instance", object.get(position));
+                        bundle.putSerializable("kind", "yihubaiying");
                         intent.putExtra("bundle", bundle);
                         tActivity.startActivity(intent);
                     }
