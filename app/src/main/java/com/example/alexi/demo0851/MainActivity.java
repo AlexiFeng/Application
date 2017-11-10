@@ -299,6 +299,13 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra("bundle", bundle);
         startActivity(intent);
     }
+    public void onClick_ZanzhuShangJia(View view){
+        intent=new Intent(view.getContext(),ZhaoZZ.class);
+        bundle = new Bundle();
+        bundle.putSerializable("instance","zanzhu_sj");
+        intent.putExtra("bundle", bundle);
+        startActivity(intent);
+    }
 }
 
 

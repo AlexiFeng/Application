@@ -43,7 +43,7 @@ public class SchoolAdapter extends BaseQuickAdapter<School, BaseViewHolder> {
     @Override
     protected void convert(BaseViewHolder helper, School item) {
         //可链式调用赋值
-        helper.setText(R.id.tv_title_zz, "公司名称:"+item.getName())
+        helper.setText(R.id.tv_title_zz, item.getName())
                 .setText(R.id.tv_time_zz, "地址:"+item.getPlace());
         Glide.with(rootView)
               .load(item.getBanner().getUrl())

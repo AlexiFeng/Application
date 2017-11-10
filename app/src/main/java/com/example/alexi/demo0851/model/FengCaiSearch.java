@@ -10,6 +10,7 @@ import java.io.Serializable;
 
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobDate;
+import cn.bmob.v3.datatype.BmobFile;
 
 /**
  * Created by alexi on 17-10-26.
@@ -17,13 +18,13 @@ import cn.bmob.v3.datatype.BmobDate;
 
 public class FengCaiSearch extends BmobObject implements Serializable {
     private club fc_club;
-    private Integer fc_size;
+    private String fc_content;
     private String fc_name;
     private BmobDate fc_date;
     private String fc_location;
-    private String tel;
-    private String qq;
     private Integer fc_kind;
+    private BmobFile banner;
+
     public club getFc_club() {
         return fc_club;
     }
@@ -32,12 +33,12 @@ public class FengCaiSearch extends BmobObject implements Serializable {
         this.fc_club = fc_club;
     }
 
-    public Integer getFc_size() {
-        return fc_size;
+    public String getFc_content() {
+        return fc_content;
     }
 
-    public void setFc_size(Integer fc_size) {
-        this.fc_size = fc_size;
+    public void setFc_content(String fc_content) {
+        this.fc_content = fc_content;
     }
 
     public String getFc_name() {
@@ -64,22 +65,6 @@ public class FengCaiSearch extends BmobObject implements Serializable {
         this.fc_location = fc_location;
     }
 
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
-
-    public String getQq() {
-        return qq;
-    }
-
-    public void setQq(String qq) {
-        this.qq = qq;
-    }
-
     public Integer getFc_kind() {
         return fc_kind;
     }
@@ -88,7 +73,13 @@ public class FengCaiSearch extends BmobObject implements Serializable {
         this.fc_kind = fc_kind;
     }
 
+    public BmobFile getBanner() {
+        return banner;
+    }
 
+    public void setBanner(BmobFile banner) {
+        this.banner = banner;
+    }
 
 
 }

@@ -10,7 +10,7 @@ public class Course extends BmobObject {
     private String name;
     private String time;
     private Integer price;
-    private School school;
+    private String school;
 
     public String getName() {
         return name;
@@ -36,11 +36,11 @@ public class Course extends BmobObject {
         this.price = price;
     }
 
-    public School getSchool() {
+    public String getSchool() {
         return school;
     }
 
-    public void setSchool(School school) {
+    public void setSchool(String school) {
         this.school = school;
     }
 

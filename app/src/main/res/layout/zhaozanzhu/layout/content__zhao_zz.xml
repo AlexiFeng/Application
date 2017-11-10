@@ -9,98 +9,140 @@
     tools:context="com.example.alexi.demo0851.zhaozanzhu.Content_ZhaoZZ"
     tools:showIn="@layout/activity_content__zhao_zz">
 
-    <TableLayout
-        android:layout_marginLeft="8dp"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="273dp">
 
-        <TableRow
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/name_zz"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="textView6"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-        </TableRow>
-
-        <TableRow
-
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center">
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp">
 
-            <TextView
-                android:id="@+id/time_zz"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <TableRow
                 android:gravity="center"
-                android:text="text"
-                android:textAppearance="@style/TextAppearance.AppCompat.Notification" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        </TableRow>
+                <TextView
+                    android:id="@+id/name_zz"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="textView6"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="265dp" />
+            </TableRow>
 
-        <TableRow
+            <TableRow
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/time_zz"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="text"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Notification"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="265dp" />
+
+            </TableRow>
+
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/textView16"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="活动需求:"
+            android:textAppearance="@style/TextAppearance.AppCompat.Notification"
+            android:textColor="@color/colorAccent" />
 
-            <TextView
-                android:layout_marginTop="15dp"
-                android:id="@+id/textView16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="活动需求:"
-                android:textColor="@color/colorAccent"
-                android:textAppearance="@style/TextAppearance.AppCompat.Notification" />
-
-        </TableRow>
-
-        <TableRow
+        <TextView
+            android:id="@+id/need_zz"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="20dp"
+            android:text="TextView"
+            android:textAppearance="@style/TextAppearance.AppCompat.Notification" />
 
-            <TextView
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="20dp"
-                android:id="@+id/need_zz"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textAppearance="@style/TextAppearance.AppCompat.Notification"  />
-
-        </TableRow>
-
-        <TableRow
+        <TableLayout
+            android:id="@+id/testTableLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="795dp">
 
-            <TextView
-                android:layout_marginTop="30dp"
-                android:id="@+id/textView18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryDark"
-                android:text="我们能提供:"
-                android:textAppearance="@style/TextAppearance.AppCompat.Notification" />
-        </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <TableRow
+                <TextView
+                    android:id="@+id/textView18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="我们能提供:"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Notification"
+                    android:textColor="@color/colorPrimaryDark" />
+            </TableRow>
 
+            <TableRow
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/provide_zz"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="20dp"
+                    android:text="TextView"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Notification" />
+
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/textView12"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:layout_marginTop="20dp"
+            android:visibility="gone" />
 
-            <TextView
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="20dp"
-                android:id="@+id/provide_zz"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textAppearance="@style/TextAppearance.AppCompat.Notification" />
-        </TableRow>
-    </TableLayout>
+        <TextView
+            android:id="@+id/textView13"
+            android:textAppearance="@style/TextAppearance.AppCompat.Notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/textView14"
+            android:textAppearance="@style/TextAppearance.AppCompat.Notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+
 </android.support.v4.widget.NestedScrollView>

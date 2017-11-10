@@ -1,6 +1,7 @@
 package com.example.alexi.demo0851.model;
 
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
 
 /**
  * Created by alexi on 17-10-25.
@@ -12,6 +13,7 @@ public class MyUser extends BmobUser {
     private Integer age;
     private Integer status;
     private club club_belong;
+    private BmobFile icon;
     /*
     * 0:Admin
     * 1:Manager
@@ -58,7 +60,13 @@ public class MyUser extends BmobUser {
     }
 
 
+    public BmobFile getIcon() {
+        return icon;
+    }
 
+    public void setIcon(BmobFile icon) {
+        this.icon = icon;
+    }
 
 
 }

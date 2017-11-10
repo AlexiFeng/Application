@@ -2,7 +2,10 @@ package com.example.alexi.demo0851.adapter;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.view.View;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.alexi.demo0851.R;
@@ -17,16 +20,19 @@ import java.util.List;
  */
 
 public class FengCaiAdapter extends BaseQuickAdapter<FengCaiSearch, BaseViewHolder> {
-    public FengCaiAdapter(@LayoutRes int layoutResId, @Nullable List<FengCaiSearch> data) {
+    private static View rootView;
+    public FengCaiAdapter(@LayoutRes int layoutResId, @Nullable List<FengCaiSearch> data,View rootView) {
         super(layoutResId, data);
+        FengCaiAdapter.rootView =rootView;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, FengCaiSearch item) {
         //可链式调用赋值
         helper.setText(R.id.tv_title_zz, item.getFc_name())
-                .setText(R.id.tv_time_zz, "时间:"+item.getFc_club().getClub_name())
-                .setImageResource(R.id.iv_img, R.mipmap.ic_launcher);
-
+                .setText(R.id.tv_time_zz, "时间:"+item.getFc_date().getDate().toString());
+        Glide.with(rootView)
+                .load(item.getBanner().getUrl())
+                .into((ImageView) helper.getView(R.id.iv_img));
     }
 }

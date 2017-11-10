@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobDate;
+import cn.bmob.v3.datatype.BmobFile;
 
 /**
  * Created by alexi on 17-10-26.
@@ -24,6 +25,8 @@ public class ZanzhuSearch extends BmobObject implements Serializable {
     private Integer verifying;
     private String reason;
     private String other;
+    private BmobFile banner;
+
     public String getOther() {
         return other;
     }
@@ -128,5 +131,13 @@ public class ZanzhuSearch extends BmobObject implements Serializable {
 
     public void setAc_kind(Integer ac_kind) {
         this.ac_kind = ac_kind;
+    }
+
+    public BmobFile getBanner() {
+        return banner;
+    }
+
+    public void setBanner(BmobFile banner) {
+        this.banner = banner;
     }
 }

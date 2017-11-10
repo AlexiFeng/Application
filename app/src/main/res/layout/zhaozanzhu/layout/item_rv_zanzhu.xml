@@ -17,9 +17,11 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/iv_img"
+        android:textStyle="bold"
+        android:textColor="#000000"
         android:text="标题"
-        android:textColor="#f00"
-        android:textSize="15sp" />
+
+        />
 
     <TextView
         android:id="@+id/tv_time_zz"

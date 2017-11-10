@@ -93,6 +93,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.alexi.demo0851.MainActivity" />
         </activity>
+        <activity
+            android:name=".Content_YHBY"
+            android:label="@string/title_activity_content__yhby"
+            android:parentActivityName=".zhaozanzhu.ZhaoZZ"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.alexi.demo0851.zhaozanzhu.ZhaoZZ" />
+        </activity>
     </application>
 
 </manifest>
