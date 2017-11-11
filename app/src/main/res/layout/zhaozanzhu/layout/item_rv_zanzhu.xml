@@ -2,12 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp">
+    >
 
     <ImageView
         android:id="@+id/iv_img"
-        android:layout_width="130dp"
-        android:layout_height="80dp" />
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:id="@+id/tv_title_zz"
@@ -17,9 +18,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/iv_img"
-        android:textStyle="bold"
-        android:textColor="#000000"
         android:text="标题"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
 
         />
 
@@ -28,11 +28,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_toRightOf="@+id/iv_img"
-        android:layout_below="@+id/tv_title_zz"
+
         android:text="时间"
-        android:textSize="15sp" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:layout_below="@+id/tv_title_zz"
+        android:layout_alignStart="@+id/tv_title_zz"
+        android:layout_marginTop="5dp" />
+
+    <TextView
+        android:id="@+id/tv_place_zz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+
+        android:text="地点"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:layout_below="@+id/tv_time_zz"
+        android:layout_alignStart="@+id/tv_time_zz"
+        android:layout_marginTop="5dp" />
+
+    <LinearLayout style="@style/common_horizontal_division_line_style"
+        android:layout_below="@+id/iv_img"
+        android:layout_marginTop="15dp"
+        android:id="@+id/linearLayout" />
 
 </RelativeLayout>
