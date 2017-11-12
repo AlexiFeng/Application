@@ -30,7 +30,8 @@ public class FengCaiAdapter extends BaseQuickAdapter<FengCaiSearch, BaseViewHold
     protected void convert(BaseViewHolder helper, FengCaiSearch item) {
         //可链式调用赋值
         helper.setText(R.id.tv_title_zz, item.getFc_name())
-                .setText(R.id.tv_time_zz, "时间:"+item.getFc_date().getDate().toString());
+                .setText(R.id.tv_time_zz, item.getFc_date().getDate().toString())
+                .setText(R.id.tv_place_zz, item.getFc_location());
         Glide.with(rootView)
                 .load(item.getBanner().getUrl())
                 .into((ImageView) helper.getView(R.id.iv_img));

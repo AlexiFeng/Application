@@ -31,7 +31,9 @@ public class ZhaoZanZhuAdapter extends BaseQuickAdapter<ZanzhuSearch, BaseViewHo
     protected void convert(BaseViewHolder helper, ZanzhuSearch item) {
         //可链式调用赋值
         helper.setText(R.id.tv_title_zz, item.getAc_name())
-                .setText(R.id.tv_time_zz, "时间:"+item.getAc_date().getDate().toString());
+                .setText(R.id.tv_time_zz, item.getAc_date().getDate().toString())
+                .setText(R.id.tv_place_zz,item.getAc_location());
+
         Glide.with(rootView)
                 .load(item.getBanner().getUrl())
                 .into((ImageView) helper.getView(R.id.iv_img));

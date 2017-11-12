@@ -15,11 +15,13 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.alexi.demo0851.Content_YHBY;
@@ -74,9 +76,9 @@ public class ZhaoZZ extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("bundle");
         instance = (String) bundle.getSerializable("instance");
-
         //---传值结束
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //--判断模块
         if (instance.equals("shetuan")){
             toolbar.setTitle("社团信息");
         }
@@ -92,6 +94,7 @@ public class ZhaoZZ extends AppCompatActivity {
         else if(instance.equals("course")){
             toolbar.setTitle("课程信息");
         }
+        //--判断结束
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Create the adapter that will return a fragment for each of the three
@@ -111,7 +114,7 @@ public class ZhaoZZ extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //生成右侧发布赞助按钮
+        //generate 'Add' Button
         getMenuInflater().inflate(R.menu.menu_zhao_zz, menu);
         MyUser currentUser = BmobUser.getCurrentUser(MyUser.class);
         if(currentUser != null&&currentUser.getStatus()==1&&instance.equals("zanzhu"))
@@ -257,7 +260,7 @@ public class ZhaoZZ extends AppCompatActivity {
                 adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                        Intent intent=new Intent(rootView.getContext(),Content_ZhaoZZ.class);
+                        Intent intent=new Intent(rootView.getContext(),Content1_ZhaoZZ.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("instance", object.get(position));
                         bundle.putSerializable("kind", "zanzhu");
@@ -265,7 +268,11 @@ public class ZhaoZZ extends AppCompatActivity {
                         tActivity.startActivity(intent);
                     }
                 });
+                TextView t=new TextView(rootView.getContext());
 
+                t.setGravity(Gravity.CENTER);
+                t.setText("\n亲，下面没有了");
+                adapter.setFooterView(t);
                 //给RecyclerView设置适配器
                 recyclerView.setAdapter(adapter);
 
@@ -292,7 +299,7 @@ public class ZhaoZZ extends AppCompatActivity {
                 adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                        Intent intent=new Intent(rootView.getContext(),Content_ZhaoZZ.class);
+                        Intent intent=new Intent(rootView.getContext(),Content1_ZhaoZZ.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("instance", object.get(position));
                         bundle.putSerializable("kind", "zanzhu_sj");
@@ -328,7 +335,7 @@ public class ZhaoZZ extends AppCompatActivity {
                 adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                        Intent intent=new Intent(rootView.getContext(),Content_ZhaoZZ.class);
+                        Intent intent=new Intent(rootView.getContext(),Content1_ZhaoZZ.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("instance", object.get(position));
                         bundle.putSerializable("kind", "fengcai");
@@ -363,7 +370,7 @@ public class ZhaoZZ extends AppCompatActivity {
                 adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                        Intent intent=new Intent(rootView.getContext(),Content_ZhaoZZ.class);
+                        Intent intent=new Intent(rootView.getContext(),Content1_ZhaoZZ.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("instance", object.get(position));
                         bundle.putSerializable("kind", "shetuan");
@@ -389,7 +396,7 @@ public class ZhaoZZ extends AppCompatActivity {
                 }
                 final RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
                 //创建适配器
-                YiHuBaiYingAdapter adapter = new YiHuBaiYingAdapter(R.layout.item_rv_zanzhu, object);
+                YiHuBaiYingAdapter adapter = new YiHuBaiYingAdapter(R.layout.item_rv_zanzhu, object,rootView);
                 adapter.openLoadAnimation(BaseQuickAdapter.ALPHAIN);
                 adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                     @Override
@@ -427,7 +434,7 @@ public class ZhaoZZ extends AppCompatActivity {
                 adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                        Intent intent=new Intent(rootView.getContext(),Content_ZhaoZZ.class);
+                        Intent intent=new Intent(rootView.getContext(),Content1_ZhaoZZ.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("instance", object.get(position));
                         bundle.putSerializable("kind", "course");

@@ -1,10 +1,14 @@
 package com.example.alexi.demo0851;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.alexi.demo0851.model.MyUser;
 import com.example.alexi.demo0851.zhaozanzhu.ZhaoZZ;
 import com.jude.rollviewpager.RollPagerView;
@@ -44,8 +49,13 @@ public class MainActivity extends AppCompatActivity
         navigationView.getMenu().clear();
         TextView myName = (TextView) headerLayout.findViewById(R.id.nav_header_name);
         TextView myEmail = (TextView) headerLayout.findViewById(R.id.nav_header_email);
+        ImageView myIcon =(ImageView)headerLayout.findViewById(R.id.imageView);
         if(nowUser != null){
-            if (nowUser.getNick() != null) {
+                 Glide.with(this)
+                         .load(nowUser.getIcon().getUrl())
+                         .into((ImageView)headerLayout.findViewById(R.id.imageView));
+
+             if (nowUser.getNick() != null) {
                 myEmail.setText(nowUser.getEmail());
                 myName.setText(nowUser.getNick());
             } else {
@@ -53,7 +63,7 @@ public class MainActivity extends AppCompatActivity
             }
             String[] inner;
             switch(nowUser.getStatus()){
-                case 0:inner = new String[]{ "修改个人信息","审批申请","登出"};nV_Generator(0, inner);myName.append("[管理员]");break;
+                case 0:inner = new String[]{ "修改个人信息","审批申请","登出"};nV_Generator(4, inner);myName.append("[管理员]");break;
                 case 1:inner = new String[]{"修改个人信息","社团管理","我的活动","我的筹一筹","交易记录","登出"};nV_Generator(1, inner);myName.append("[社团管理者]");break;
                 case 2:inner = new String[]{ "修改个人信息", "我的社团","我的筹一筹","登出"};nV_Generator(2, inner);myName.append("[学生]");break;
                 case 3:inner = new String[]{"修改个人信息", "我发布的赞助","我提供的赞助","交易记录","登出"};nV_Generator(3, inner);myName.append("[企业人士]");break;
@@ -62,6 +72,7 @@ public class MainActivity extends AppCompatActivity
         else{
             myName.setText("请先登录");
             myEmail.setText("username@email.com");
+            myIcon.setImageResource(R.mipmap.ic_launcher);
             navigationView.getMenu().add(1,0,1,"登录");
             navigationView.getMenu().add(1,1,1,"关于");
             navigationView.getMenu().setGroupVisible(0,false);
@@ -78,15 +89,6 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -129,8 +131,30 @@ public class MainActivity extends AppCompatActivity
         //mRollViewPager.setHintView(new TextHintView(this));
         //mRollViewPager.setHintView(null);
         //---
-
+        //test();
         onRestart();
+
+    }
+
+    private void test() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
+        startActivityForResult(intent,0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+
+
+
+        // 外界的程序访问ContentProvider所提供数据 可以通过ContentResolver接口
+
+        ContentResolver resolver = getContentResolver();
+
+
+                Uri originalUri = data.getData(); // 获得图片的uri
+                Log.e("URI--", String.valueOf(originalUri));
 
     }
 
@@ -174,13 +198,13 @@ public class MainActivity extends AppCompatActivity
             turnLogin();
         }
         else{
-            if(group==0){
+            if(group==4){
                //TODO:管理员状态侧栏函数
                 switch(id){
                     case 0: startActivity(new Intent(this,Information_Xiugai.class));break;
                     case 1: startActivity(new Intent(this,ShenQingShenpi.class));break;
+                    case 2:logout();break;
                 }
-
             }
             else if(group==1){
                //TODO:社团管理者状态侧栏函数
@@ -199,7 +223,7 @@ public class MainActivity extends AppCompatActivity
                     case 0: startActivity(new Intent(this,Information_Xiugai.class));break;
                     case 1: break;
                     case 2: break;
-                    case 3: break;
+                    case 3: logout();break;
                     case 4: break;
                     case 5: logout();break;
                 }
@@ -211,8 +235,8 @@ public class MainActivity extends AppCompatActivity
                     case 1: break;
                     case 2: break;
                     case 3: break;
-                    case 4: break;
-                    case 5: logout();break;
+                    case 4: logout();break;
+                    case 5: break;
                 }
             }
 

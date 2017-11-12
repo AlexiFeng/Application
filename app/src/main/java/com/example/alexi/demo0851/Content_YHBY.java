@@ -13,8 +13,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.alexi.demo0851.adapter.ClubAdapter;
 import com.example.alexi.demo0851.adapter.CommentAdapter;
@@ -43,7 +45,13 @@ public class Content_YHBY extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
+        MyUser currentUser = BmobUser.getCurrentUser(MyUser.class);
+        Glide.with(this)
+                .load("https://bmob-cdn-15019.b0.upaiyun.com/2017/11/10/51213eca4028951a80578e806dac0af9.jpeg")
+                .into((ImageView) findViewById(R.id.headerAuthor_YHBY));
+        Glide.with(this)
+                .load("https://bmob-cdn-15019.b0.upaiyun.com/2017/11/10/2d1cd4ce402832d980e8ecf57c1112b5.jpeg")
+                .into((ImageView)findViewById(R.id.head_answer));
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("bundle");
         Post tempPost=(Post)bundle.getSerializable("instance");
@@ -51,7 +59,9 @@ public class Content_YHBY extends AppCompatActivity {
         TextView title=(TextView)findViewById(R.id.title_YHBY);
         TextView content=(TextView)findViewById(R.id.content_YHBY);
         TextView author=(TextView)findViewById(R.id.author_YHBY);
-
+        author.setText("Alexi.F");
+        TextView publish=(TextView)findViewById(R.id.publish_YHBY);
+        publish.setText(tempPost.getCreatedAt().toString());
         title.setText(tempPost.getTitle());
         content.setText(tempPost.getContent());
 
@@ -64,7 +74,7 @@ public class Content_YHBY extends AppCompatActivity {
         });
 
         BmobQuery<Comment> query = new BmobQuery<>();
-
+        query.include("author");
         query.findObjects(new FindListener<Comment>() {
             @Override
             public void done(final List<Comment> object, BmobException e) {
@@ -74,7 +84,7 @@ public class Content_YHBY extends AppCompatActivity {
                 final TextView comments = (TextView)findViewById(comment_YHBY);
                 comments.setText("");
                 for(Comment test : object){
-                    comments.append(test.getContent());
+                    comments.append("("+test.getCreatedAt().toString()+"):"+test.getContent());
                 }
             }
         });

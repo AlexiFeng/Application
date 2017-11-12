@@ -1,6 +1,5 @@
 package com.example.alexi.demo0851.zhaozanzhu;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,25 +7,20 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.alexi.demo0851.R;
-import com.example.alexi.demo0851.adapter.SchoolAdapter;
-import com.example.alexi.demo0851.model.Comment;
 import com.example.alexi.demo0851.model.Course;
 import com.example.alexi.demo0851.model.FengCaiSearch;
 import com.example.alexi.demo0851.model.MyUser;
-import com.example.alexi.demo0851.model.Post;
 import com.example.alexi.demo0851.model.PrivateMessage;
 import com.example.alexi.demo0851.model.School;
 import com.example.alexi.demo0851.model.ZanzhuSJSearch;
@@ -42,14 +36,14 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 
-public class Content_ZhaoZZ extends AppCompatActivity {
+public class Content1_ZhaoZZ extends AppCompatActivity {
     private static School tempSchool;
     private static Context test;
     private static TableLayout tempLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_content__zhao_zz);
+        setContentView(R.layout.activity_content1__zhao_zz);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -71,9 +65,17 @@ public class Content_ZhaoZZ extends AppCompatActivity {
             fengCai(instance);
         }
         else if (kind.equals("course")){
+            ImageView clearImage =(ImageView)findViewById(R.id.imageView3) ;
+            clearImage.setVisibility(View.INVISIBLE);
+            clearImage=(ImageView)findViewById(R.id.imageView5);
+            clearImage.setVisibility(View.INVISIBLE);
+            TextView temp1=(TextView)findViewById(R.id.kindDate);
+            temp1.setVisibility(View.GONE);
+            temp1=(TextView)findViewById(R.id.club_Name);
+            temp1.setVisibility(View.GONE);
             final School instance = (School) bundle.getSerializable("instance");
             tempSchool=instance;
-            tempLayout=(TableLayout)findViewById(R.id.tempLayout);
+            tempLayout=(TableLayout) findViewById(R.id.tempLayout);
             school(instance);
         }
         else if (kind.equals("zanzhu_sj")){
@@ -87,27 +89,37 @@ public class Content_ZhaoZZ extends AppCompatActivity {
 
     private void zhaoZanZhu(final ZanzhuSearch instance) {
 
-            TextView con=(TextView)findViewById(R.id.name_zz);
-            con.setText(instance.getAc_name());
+        TextView con=(TextView)findViewById(R.id.name_zz);
+        con.setText(instance.getAc_name());
 
-            con=(TextView)findViewById(R.id.time_zz);
-            con.setText(instance.getAc_date().getDate().toString());
-            con=(TextView)findViewById(R.id.need_zz);
-            con.setText(instance.getAc_need());
-            con=(TextView)findViewById(R.id.provide_zz);
-            con.setText(instance.getAc_provide());
-            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showDialog();
-                }
-            });
+        con=(TextView)findViewById(R.id.time_zz);
+        con.setText("时间:"+instance.getAc_date().getDate().toString());
+        con=(TextView)findViewById(R.id.need_zz);
+        con.setText(instance.getAc_need());
+        con=(TextView)findViewById(R.id.provide_zz);
+        con.setText(instance.getAc_provide());
+        con=(TextView)findViewById(R.id.place_zz);
+        con.setText("地点:"+instance.getAc_location());
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog();
+            }
+        });
 
     }
     private void zhaoZanZhuSJ(final ZanzhuSJSearch instance) {
+        TextView temp1=(TextView)findViewById(R.id.kindDate);
+        temp1.setVisibility(View.INVISIBLE);
+        temp1=(TextView)findViewById(R.id.club_Name);
+        temp1.setVisibility(View.INVISIBLE);
         TextView con=(TextView)findViewById(R.id.name_zz);
-        con.setText(instance.getName()+".....");
+        con.setText(instance.getName());
+        ImageView test =(ImageView)findViewById(R.id.imageView3) ;
+        test.setVisibility(View.INVISIBLE);
+        test=(ImageView)findViewById(R.id.imageView5);
+        test.setVisibility(View.INVISIBLE);
 
         con=(TextView)findViewById(R.id.time_zz);
         con.setText("有效时间:"+instance.getTime());
@@ -116,11 +128,11 @@ public class Content_ZhaoZZ extends AppCompatActivity {
         con=(TextView)findViewById(R.id.need_zz);
         con.setText(instance.getProvide());
         con=(TextView)findViewById(R.id.provide_zz);
-        con.setText(instance.getProvide());
-        con=(TextView)findViewById(R.id.textView13);
-        con.setVisibility(View.VISIBLE);
         con.setText(instance.getDetails());
-        con=(TextView)findViewById(R.id.textView14);
+        con=(TextView)findViewById(R.id.jianjie_Title);
+        con.setVisibility(View.VISIBLE);
+        con.setText("\n\n简介:");
+        con=(TextView)findViewById(R.id.jianjie_ZZ);
         con.setVisibility(View.VISIBLE);
         con.setText(instance.getIntroduction());
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -157,17 +169,23 @@ public class Content_ZhaoZZ extends AppCompatActivity {
     private void fengCai(final FengCaiSearch instance) {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setVisibility(View.GONE);
+        TextView club_Name=(TextView)findViewById(R.id.club_Name);
+        club_Name.setText("曲艺团");
+        TextView kindDate=(TextView)findViewById(R.id.kindDate);
+        kindDate.setText("文娱 | 2017-10-25");
         TextView funcJianjie=(TextView)findViewById(R.id.textView16);
-        funcJianjie.setText("地点:");
+        funcJianjie.setVisibility(View.GONE);
         TextView funcContent=(TextView)findViewById(R.id.textView18);
         funcContent.setText("活动详情:");
         TextView con=(TextView)findViewById(R.id.name_zz);
         con.setText(instance.getFc_name());
 
         con=(TextView)findViewById(R.id.time_zz);
-        con.setText(instance.getFc_date().getDate().toString());
+        con.setText("时间:"+instance.getFc_date().getDate().toString());
+        con=(TextView)findViewById(R.id.place_zz);
+        con.setText("地点:"+instance.getFc_location());
         con=(TextView)findViewById(R.id.need_zz);
-        con.setText(instance.getFc_location());
+        con.setVisibility(View.INVISIBLE);
         con=(TextView)findViewById(R.id.provide_zz);
         con.setText(instance.getFc_content());
 
@@ -201,14 +219,16 @@ public class Content_ZhaoZZ extends AppCompatActivity {
             private void addItem_Course(List<Course> object) {
                 TextView schoolName=(TextView)rootView.findViewById(R.id.name_zz);
                 schoolName.setText(tempSchool.getName());
-                TextView schoolPlace=(TextView)rootView.findViewById(R.id.time_zz);
-                schoolPlace.setText(tempSchool.getPlace());
+                TextView schoolTel=(TextView)rootView.findViewById(R.id.time_zz);
+                schoolTel.setText("联系电话:"+tempSchool.getTel());
+                TextView schoolPlace=(TextView)rootView.findViewById(R.id.place_zz);
+                schoolPlace.setText("地址:"+tempSchool.getPlace());
                 TextView funcJianjie=(TextView)rootView.findViewById(R.id.textView16);
                 funcJianjie.setText("机构简介:");
                 TextView schoolInfo=(TextView)rootView.findViewById(R.id.need_zz);
                 schoolInfo.setText(tempSchool.getInformation());
                 TextView funcCourse=(TextView)rootView.findViewById(R.id.textView18);
-                funcCourse.setText("课程列表");
+                funcCourse.setText("课程列表:\n");
                 TextView funcDrop=(TextView)rootView.findViewById(R.id.provide_zz);
                 funcDrop.setVisibility(View.GONE);
 
@@ -230,14 +250,14 @@ public class Content_ZhaoZZ extends AppCompatActivity {
                     TextView textView2 = new TextView(test);
                     TextView textView3 = new TextView(test);
                     textView.setText(temp.getName());
-                       textView2.setText(temp.getTime());
-                       textView3.setText("    "+temp.getPrice());
+                    textView2.setText(temp.getTime());
+                    textView3.setText("    "+temp.getPrice());
                     textView3.setGravity(Gravity.RIGHT);
                     tableRow.addView(textView);
-                       tableRow.addView(textView2);
-                       tableRow.addView(textView3);
-                       tempLayout.addView(tableRow);
-                   }
+                    tableRow.addView(textView2);
+                    tableRow.addView(textView3);
+                    tempLayout.addView(tableRow);
+                }
             }
 
         });
@@ -271,4 +291,5 @@ public class Content_ZhaoZZ extends AppCompatActivity {
             }
         }).show();
     }
+
 }

@@ -88,47 +88,67 @@
         app:layout_constraintTop_toBottomOf="@+id/headerAuthor_YHBY"
         app:layout_constraintRight_toLeftOf="@+id/textView23"
         android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp" />
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
+
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="277dp"
-        android:orientation="vertical"
-        android:layout_marginTop="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/comment_Total"
-        android:layout_marginLeft="6dp"
-        app:layout_constraintLeft_toLeftOf="parent">
+        android:id="@+id/lL3"
+        style="@style/common_horizontal_division_line_style"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="9dp"
+        android:background="#dddddd"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/comment_Total" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="587dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="31dp"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/comment_Total">
+
+        <ImageView
+            android:id="@+id/head_answer"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/author" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/comment_Total">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView20"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.03"
+                android:text=" 冰镇地瓜"
+                android:textAppearance="@style/TextAppearance.Design.Snackbar.Message"
                 android:textColor="#72ACE3"
-                android:text="冰镇地瓜"
                 tools:layout_editor_absoluteX="237dp"
                 tools:layout_editor_absoluteY="293dp" />
 
             <TextView
                 android:id="@+id/comment_YHBY"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="评论区"
+                android:textAppearance="@style/TextAppearance.Design.Snackbar.Message"
                 tools:layout_editor_absoluteX="24dp"
                 tools:layout_editor_absoluteY="293dp" />
 
         </LinearLayout>
+
     </LinearLayout>
 
     <TextView
@@ -139,6 +159,32 @@
         android:layout_marginTop="139dp"
         app:layout_constraintTop_toBottomOf="@+id/headerAuthor_YHBY"
         android:layout_marginRight="30dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="30dp" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/good"
+        app:layout_constraintLeft_toRightOf="@+id/author_YHBY"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintHorizontal_bias="0.88" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView7"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/imageView7"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="@+id/imageView7" />
 
 </android.support.constraint.ConstraintLayout>

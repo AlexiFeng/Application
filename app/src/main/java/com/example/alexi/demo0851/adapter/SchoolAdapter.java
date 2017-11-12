@@ -44,7 +44,9 @@ public class SchoolAdapter extends BaseQuickAdapter<School, BaseViewHolder> {
     protected void convert(BaseViewHolder helper, School item) {
         //可链式调用赋值
         helper.setText(R.id.tv_title_zz, item.getName())
-                .setText(R.id.tv_time_zz, "地址:"+item.getPlace());
+                .setText(R.id.tv_place_zz, item.getPlace())
+                .setText(R.id.tv_time_zz,item.getTel())
+                .setImageResource(R.id.imageView2, R.drawable.tel);
         Glide.with(rootView)
               .load(item.getBanner().getUrl())
               .into((ImageView) helper.getView(R.id.iv_img));

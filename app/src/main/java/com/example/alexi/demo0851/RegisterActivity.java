@@ -3,7 +3,9 @@ package com.example.alexi.demo0851;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -34,12 +36,15 @@ import android.widget.Toast;
 
 import com.example.alexi.demo0851.model.MyUser;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UploadFileListener;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -332,6 +337,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
                 user.setEmail(mEmail);
                 user.setPassword(mPassword);
                 user.setStatus(mStatus);
+
                 user.signUp(new SaveListener<BmobUser>() {
                     @Override
                     public void done(BmobUser s, BmobException e) {

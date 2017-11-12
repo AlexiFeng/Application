@@ -4,6 +4,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -23,13 +24,17 @@ private static View rootView;
 public ZanZhuSJAdapter(@LayoutRes int layoutResId, @Nullable List<ZanzhuSJSearch> data,View rootView) {
         super(layoutResId, data);
         ZanZhuSJAdapter.rootView =rootView;
+
         }
 
 @Override
 protected void convert(BaseViewHolder helper, ZanzhuSJSearch item) {
         //可链式调用赋值
         helper.setText(R.id.tv_title_zz, item.getName())
-        .setText(R.id.tv_time_zz, "时间:"+item.getTime());
+        .setText(R.id.tv_time_zz,item.getTime())
+        .setImageResource(R.id.imageView2, R.drawable.time)
+         .setImageResource(R.id.imageView4, R.drawable.activity)
+        .setText(R.id.tv_place_zz,item.getRequire());
         Glide.with(rootView)
         .load(item.getBanner().getUrl())
         .into((ImageView) helper.getView(R.id.iv_img));

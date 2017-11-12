@@ -102,6 +102,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.alexi.demo0851.zhaozanzhu.ZhaoZZ" />
         </activity>
+        <activity
+            android:name=".zhaozanzhu.Content1_ZhaoZZ"
+            android:label="@string/title_activity_content1__zhao_zz"
+            android:parentActivityName=".zhaozanzhu.ZhaoZZ"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.alexi.demo0851.zhaozanzhu.ZhaoZZ" />
+        </activity>
     </application>
 
 </manifest>
